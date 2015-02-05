@@ -6,6 +6,7 @@
   @practice     Homework2 - Practice 2
   @description  Peer-to-Peer communication with UDP Sockets
 */
+package pract2;
 
 import java.net.*;
 import java.io.*;

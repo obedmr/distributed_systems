@@ -7,6 +7,8 @@
   @description  Peer-to-Peer communication with TCP Sockets
 */
 
+package pract1;
+
 import java.net.*;
 import java.io.*;
 import java.util.logging.Logger;
