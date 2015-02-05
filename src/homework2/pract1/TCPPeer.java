@@ -1,11 +1,19 @@
-//package com.items.ds.homework2.pract1;
+/*
+  @author       Obed N Munoz
+  @school       ITESM - Master in Computer Sciences
+  @class        Distributed Systems 
+  @profressor   Marcos de Alba 
+  @practice     Homework2 - Practice 1
+  @description  Peer-to-Peer communication with TCP Sockets
+*/
 
 import java.net.*;
 import java.io.*;
 import java.util.logging.Logger;
 import java.io.InputStreamReader;
 import java.io.BufferedReader;
-
+import java.util.Scanner;
+    
 public class TCPPeer {
 
     private final static Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
@@ -16,7 +24,8 @@ public class TCPPeer {
 	int peerPort = 0;
 	String colleagueAddress = "";
 	int colleaguePort = 0;
-	int startFlag = 0; 
+	int startFlag = 0;
+	Boolean started = false;
 
 	if(args.length != 5){
 	    LOGGER.severe("Invalid Number of parameters");
@@ -54,9 +63,12 @@ public class TCPPeer {
 		     startFlag = 0;
 		    }
 		}
+		if (!started)
+		    LOGGER.info("Wating for  peer");
 		Socket clientSocket = listenSocket.accept();
 		Connection c = new Connection(clientSocket, peerName, peerPort, 
 					      colleagueAddress, colleaguePort);
+		started = true;
 	    }
 	} catch(IOException e) {
 	    System.out.println("Listen socket:"+e.getMessage());
@@ -101,25 +113,30 @@ class Connection extends Thread {
 	    String[] data = buffer.split(":"); 
 	    colleagueAddress = data[0];
 	    colleaguePort = Integer.parseInt(data[1]);
-
 	    System.out.println("["+data[2]+"] > "+data[3]);
 	    
-	    /*if (!new String("RECIBIDO").equals(data[3])) {
-	    System.out.println("["+data[2]+"] > "+data[3]);
-	    Socket s2 = new Socket(colleagueAddress, colleaguePort);
-	    DataInputStream in2 = new DataInputStream( s2.getInputStream());
-	    DataOutputStream out2 =new DataOutputStream( s2.getOutputStream());
-	    String outMsg2 = peerAddress+":"+peerPort+":"+peerName+":"+"RECIBIDO";
-	    out2.writeUTF(outMsg2);
-	    s2.close();
-	    }*/
-	
-	    System.out.print("["+peerName+"] > ");
+	    /*
+	      // WIP for being able to write 2 or more messages in a row
+	      // instead of waiting for peer message
+	      if (!new String("RECIBIDO").equals(data[3])) {
+	      System.out.println("["+data[2]+"] > "+data[3]);
+	      Socket s2 = new Socket(colleagueAddress, colleaguePort);
+	      DataInputStream in2 = new DataInputStream( s2.getInputStream());
+	      DataOutputStream out2 =new DataOutputStream( s2.getOutputStream());
+	      String outMsg2 = peerAddress+":"+peerPort+":"+peerName+":"+"RECIBIDO";
+	      out2.writeUTF(outMsg2);
+	      s2.close();
+	      }
+	    */
 
-	    BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
-	    String answer = bufferRead.readLine();
-
-	    if (answer != ""){
+	    String answer = "";
+	    
+	    Scanner scanner = new Scanner(System.in);
+	    while ("".equals(answer) || " ".equals(answer) || answer == null){
+		System.out.print("["+peerName+"] > ");
+		answer = scanner.nextLine();
+	    }
+	    if (answer != "" && answer != " "){
 		Socket s = null;
 		try{
 		    s = new Socket(colleagueAddress, colleaguePort);
@@ -142,7 +159,6 @@ class Connection extends Thread {
 			}
 		}
 	    }
-	    //System.out.print("["+peerName+"] > ");
 
 	}catch (EOFException e){
 	    System.out.println("EOF:"+e.getMessage());
@@ -150,8 +166,7 @@ class Connection extends Thread {
 	    System.out.println("readline:"+e.getMessage());
 	} finally{ 
 	    try {
-		if ("" == "/quit")
-		    clientSocket.close();
+		clientSocket.close();
 	    } catch (IOException e){
 		/*close failed*/
 	    }
