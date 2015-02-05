@@ -1,4 +1,4 @@
-package com.itesm.ds.view;
+package view;
 
 import java.awt.EventQueue;
 import java.util.logging.Logger;

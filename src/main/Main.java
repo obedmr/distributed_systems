@@ -1,10 +1,10 @@
-package com.itesm.ds.main;
+package main;
 
 
 import java.awt.EventQueue;
 import java.util.logging.Logger;
 
-import com.itesm.ds.view.Dashboard;
+import view.Dashboard;
 
 
 public class Main {
