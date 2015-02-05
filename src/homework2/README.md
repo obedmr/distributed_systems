@@ -26,7 +26,7 @@ NOTES:
   a prompt as follows:
    [<user_name>] >
 - The communication between is 1to1, a user cannot send
-  2 messages at the same time, he/she needs to wait the
+  2 messages or more messages in a row, he/she needs to wait the
   other to respond. (More than 1 messages in a row is a
   WIP feature)
 
@@ -58,6 +58,6 @@ NOTES:
   a prompt as follows:
      [<user_name>] >
 - The communication between is 1to1, a user cannot send
-  2 messages at the same time, he/she needs to wait the
+  2 messages or more messages in a row, he/she needs to wait the
   other to respond. (More than 1 messages in a row is a
   WIP feature)
