@@ -1,3 +1,3 @@
 #!/bin/bash
 
-java -cp ./bin/ com.itesm.ds.main.Main
+java -cp ./bin/ main.Main
