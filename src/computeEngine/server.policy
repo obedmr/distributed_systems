@@ -1,0 +1,3 @@
+grant codeBase "file:/home/vagrant/distributed_systems/src/RMI/computeEngine" {
+    permission java.security.AllPermission;
+};
